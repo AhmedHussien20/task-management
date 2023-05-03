@@ -32,11 +32,11 @@
                 </label>
             </div>
            
-        <!-- <div class="flex justify-end mt-4">
+        <div class="flex justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
                 {{ __('Don\'t have an account? Sign up') }}
             </a>
-        </div> -->
+        </div>
    
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
