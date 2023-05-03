@@ -18,8 +18,9 @@ use App\Jobs\UpdateStatistics;
 Route::get('/my-page', \App\Http\Livewire\MyPage::class);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+ 
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\UpdateStatistics;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -34,16 +35,28 @@ class TaskController extends Controller
         $users = User::where('is_admin', false)->get();
         return view('tasks.create', ['admins' => $admins, 'users' => $users]);
     }
-    
+    public function storeValidation()
+    {
+        return [
+            'admin_name' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'assigned_user' => 'required|exists:users,id',
+        ];
+    }
     public function store(Request $request)
     {
         //dd($request);
-        $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'assigned_user' => 'required|exists:users,id',
-            'admin_name' => 'required|exists:users,id',
-        ]);
+        // $request->validate([
+        //     'title' => 'required|max:255',
+        //     'description' => 'required',
+        //     'assigned_user' => 'required|exists:users,id',
+        //     'admin_name' => 'required|exists:users,id',
+        // ]);
+        $validator = Validator::make($request->all(), $this->storeValidation());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $task = new Task();
         $task->created_by = Auth::user()->id; 
         $task->assigned_by_id = $request->input('admin_name');

@@ -30,8 +30,8 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->job(new UpdateStatistics)->hourly();
-    }
+    // protected function schedule(Schedule $schedule)
+    // {
+        //$schedule->job(new UpdateStatistics)->hourly();
+    //}
 }
